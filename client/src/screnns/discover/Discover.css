@@ -1,0 +1,43 @@
+.discover-cons{
+    /* background-color: red; */
+    width: 80%;
+    margin-top: 50px;
+}
+
+.discover-item{
+    margin: 50px;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+}
+
+.user-discover{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.user-discover img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.user-discover p{
+    font-family: "Poppins";
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.explore-desc img{
+    width: 80%;
+    height: 500px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+}
+
+.header-explore{
+    display: flex;
+    justify-content: space-around;
+}

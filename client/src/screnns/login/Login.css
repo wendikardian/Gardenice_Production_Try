@@ -1,0 +1,35 @@
+.form-container{
+    position: fixed;
+    background-color: white;
+    border-radius: 30pt;
+    width: 40%;
+    margin-bottom: -300pt;
+    margin-top: 100pt;
+    margin-left: 100pt;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 50pt;
+}
+
+.img-login{
+    position: fixed;
+    top: 80pt;
+    right: 50pt;
+}
+
+.logo-login{
+    width: 340pt;
+}
+
+.for-login{
+    background-image: url(bg.jpg);
+    background-color:rgba(0, 0, 0, 0.5);
+    background-size: cover;
+}
+
+
+.login{
+    width: 100px;
+    height: 100px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}

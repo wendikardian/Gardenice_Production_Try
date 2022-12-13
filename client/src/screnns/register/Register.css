@@ -1,0 +1,31 @@
+.reg-form {
+    /* position: fixed; */
+    background-color: white;
+    border-radius: 30pt;
+    width: 40%;
+    /* margin-bottom: -300pt;
+    margin-top: 100pt;
+    margin-left: 100pt; */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 50pt;
+}
+
+
+.logo-login {
+    width: 340pt;
+}
+
+.form-cons{
+    background-image: url(bg.jpg);
+    background-color:rgba(0, 0, 0, 0.5);
+    background-size: cover;
+    height:100%;
+    padding-top: 200px;
+    padding-bottom: 200px;
+    /* background-color: red; */
+    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+}
+
+

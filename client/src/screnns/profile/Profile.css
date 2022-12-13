@@ -1,0 +1,29 @@
+.container-profile1{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: red; */
+    max-width: 500px;
+    width: 500px;
+}
+
+.data-profile{
+      font-family: 'Poppins', sans-serif !important;
+    /* background-color: white; */
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.site-layout{
+    display: flex;
+    /* background-color: red; */
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-title{
+    width: 200px;
+    font-weight: bold;
+}

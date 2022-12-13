@@ -1,0 +1,12 @@
+.movie-section {
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.ant-menu-sub.ant-menu-inline {
+    background: #ffffff !important;
+}
+
+.ant-layout-sider-trigger{
+    background-color: #557153 !important;
+}
