@@ -42,7 +42,7 @@ const LoginForm = () => {
         // Cookies.set("token", token, { expires: 1 });
         message.success(`welcome, ${name}`);
         setIsLogin(true);
-        navigate('/');
+        navigate('/profile');
       })
       .catch((err) => {
         console.log(err.response.data);

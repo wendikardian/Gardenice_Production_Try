@@ -68,7 +68,6 @@ const EditDiscover = () => {
               {filter.map((x) => {
                 return (
                   <Form
-                    
                     name="normal_login"
                     className="login-form"
                     initialValues={{ 

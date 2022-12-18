@@ -61,6 +61,7 @@ func Routers() {
 	router.DELETE("/deleteExplore/:id", deleteExplore)
 	router.DELETE("/deleteComment/:id", deleteComment)
 	router.PUT("/updateExplore/:id", updateExploreHandler)
+	router.PUT("/updateUser/:id", updateUserHandler)
 	
 	router.Run(":8081")
 	// router.HandleFunc("/users/{id}",
@@ -387,9 +388,34 @@ func updateExploreHandler(c *gin.Context) {
 }
 
 func updateDataExplore(id string, data UpdatePostingan) error {
-
 	query := `UPDATE posting SET title = ?, post = ?, gambar = ? WHERE id = ?`
 	_, err = db.Exec(query, data.Title, data.Post, data.Gambar, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func updateUserHandler(c *gin.Context) {
+	id := c.Param("id")
+
+	var userData UserUpdateData
+	if err := c.BindJSON(&userData); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := updateDataUser(id, userData); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Data updated successfully"})
+}
+
+func updateDataUser(id string, data UserUpdateData) error {
+	query := `UPDATE user SET email = ?, name = ?, image= ? WHERE id = ?`
+	_, err = db.Exec(query, data.Email, data.Name, data.Image, id)
 	if err != nil {
 		return err
 	}
@@ -658,6 +684,13 @@ type User struct {
 	Roles     int `json:"roles"`
 	Image string `json:"image"`
 }
+
+type UserUpdateData struct {
+	Name string `json:"name"`
+	Email  string `json:"email"`
+	Image string `json:"image"`
+}
+
 
 type UserData struct {
 	ID        int64 `json:"id"`

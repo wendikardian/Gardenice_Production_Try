@@ -11,11 +11,39 @@ import Sidebar from "../../Sidebar/Sidebar";
 import { Layout, Menu } from "antd";
 import Cookies from "js-cookie";
 import { DataCtx } from "../../Data/Data";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
   const { userDataList } = useContext(DataCtx);
   const filter = userDataList.filter((x) => x.id == Cookies.get("id"));
-  console.log(filter)
+  console.log(filter);
+  const navigate = useNavigate();
+  let id = Cookies.get("id");
+  const onFinish = async (values) => {
+    // console.log(valcanues)
+    const data = {
+      email: values.email,
+      name: values.username,
+      image: values.image,
+    };
+    console.log(data);
+    axios
+      .put(`http://localhost:8081/updateUser/${id}`, data)
+      .then(() => {
+        Cookies.set("email", data.email, { expires: 1 });
+        Cookies.set("name", data.name, { expires: 1 });;
+        Cookies.set("image", data.image, { expires: 1 });
+        setTimeout(() => {
+          message.success("Success ! Edit the feeds");
+        }, 1000);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        message.error(err.response.data);
+      });
+  };
+
   return (
     <div>
       <Layout style={{ minHeight: "100vh" }}>
@@ -31,11 +59,12 @@ const EditProfile = () => {
                   <Form
                     name="normal_login"
                     className="login-form"
-                    initialValues={{ 
-                      email : x.email,
-                      username  : x.name,
-                      image : x.image
-                     }}
+                    initialValues={{
+                      email: x.email,
+                      username: x.name,
+                      image: x.image,
+                    }}
+                    onFinish={onFinish}
                   >
                     <Form.Item
                       name="email"
