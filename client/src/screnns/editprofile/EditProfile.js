@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card, message } from "antd";
 import { Form, Input, Checkbox } from "antd";
-import { UserOutlined, MailOutlined } from "@ant-design/icons";
+import { UserOutlined, MailOutlined, PictureOutlined } from "@ant-design/icons";
 import "./EditProfile.css";
 import axios from "axios";
 import { Image, Button } from "antd";
@@ -10,28 +10,12 @@ import { EditOutlined } from "@ant-design/icons";
 import Sidebar from "../../Sidebar/Sidebar";
 import { Layout, Menu } from "antd";
 import Cookies from "js-cookie";
+import { DataCtx } from "../../Data/Data";
 
 const EditProfile = () => {
-  const [post, setPost] = useState([]);
-  useEffect(() => {
-    const fetchPosting = async () => {
-      const dataPosting = await axios.get(`http://localhost:9080/post`);
-      setPost(
-        dataPosting.data.map((x) => {
-          return {
-            id: x.id,
-            user_id: x.user_id,
-            title: x.title,
-            post: x.post,
-            gambar: x.gambar,
-            date: x.date,
-          };
-        })
-      );
-    };
-    fetchPosting();
-  }, []);
-
+  const { userDataList } = useContext(DataCtx);
+  const filter = userDataList.filter((x) => x.id == Cookies.get("id"));
+  console.log(filter)
   return (
     <div>
       <Layout style={{ minHeight: "100vh" }}>
@@ -42,40 +26,65 @@ const EditProfile = () => {
           </div>
           <div className="container-profile1">
             <div className="editform-cons">
-              <Form
-                name="normal_login"
-                className="login-form"
-                initialValues={{ remember: true }}
-                //   onFinish={onFinish}
-              >
-                <Form.Item
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please input your email!" },
-                  ]}
-                >
-                  <Input prefix={<MailOutlined />} placeholder="email" />
-                </Form.Item>
-                <Form.Item
-                  name="username"
-                  rules={[
-                    { required: true, message: "Please insert your username" },
-                  ]}
-                >
-                  <Input prefix={<UserOutlined />} placeholder="Username" />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    htmlType="submit"
-                    icon={<EditOutlined />}
-                    size={24}
+              {filter.map((x) => {
+                return (
+                  <Form
+                    name="normal_login"
+                    className="login-form"
+                    initialValues={{ 
+                      email : x.email,
+                      username  : x.name,
+                      image : x.image
+                     }}
                   >
-                    Save
-                  </Button>
-                </Form.Item>
-              </Form>
+                    <Form.Item
+                      name="email"
+                      rules={[
+                        { required: true, message: "Please input your email!" },
+                      ]}
+                      values={Cookies.get("email")}
+                    >
+                      <Input prefix={<MailOutlined />} placeholder="email" />
+                    </Form.Item>
+
+                    <Form.Item
+                      name="username"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please insert your username",
+                        },
+                      ]}
+                    >
+                      <Input prefix={<UserOutlined />} placeholder="Username" />
+                    </Form.Item>
+                    <Form.Item
+                      name="image"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your image link",
+                        },
+                      ]}
+                    >
+                      <Input
+                        prefix={<PictureOutlined />}
+                        placeholder="Profile picture"
+                      />
+                    </Form.Item>
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        htmlType="submit"
+                        icon={<EditOutlined />}
+                        size={24}
+                      >
+                        Save
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                );
+              })}
             </div>
           </div>
         </Layout>

@@ -59,6 +59,8 @@ func Routers() {
 	router.POST("/insertExplore", insertExplore)
 	router.POST("/insertComment", insertComment)
 	router.DELETE("/deleteExplore/:id", deleteExplore)
+	router.DELETE("/deleteComment/:id", deleteComment)
+	router.PUT("/updateExplore/:id", updateExploreHandler)
 	
 	router.Run(":8081")
 	// router.HandleFunc("/users/{id}",
@@ -279,6 +281,33 @@ func deteteExploreDB(id int) error {
 	return nil
 }
 
+func deleteComment(c *gin.Context) {
+	id := c.Param("id")
+	itemID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	err = deleteCommentDB(itemID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Item deleted successfully"})
+}
+
+func deleteCommentDB(id int) error {
+	
+	_, err = db.Exec("DELETE FROM comment WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+
+
 
 func getUserList(c *gin.Context) {
 	code := c.Param("code")
@@ -339,6 +368,34 @@ func addExplore(post Postingan) {
 
 	defer insert.Close()
 }
+
+func updateExploreHandler(c *gin.Context) {
+	id := c.Param("id")
+
+	var data UpdatePostingan
+	if err := c.BindJSON(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := updateDataExplore(id, data); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Data updated successfully"})
+}
+
+func updateDataExplore(id string, data UpdatePostingan) error {
+
+	query := `UPDATE posting SET title = ?, post = ?, gambar = ? WHERE id = ?`
+	_, err = db.Exec(query, data.Title, data.Post, data.Gambar, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 
 func insertComment(c *gin.Context) {
 	var comment Comment
@@ -566,6 +623,12 @@ type Postingan struct {
 	Post     string `json:"post"`
 	Gambar     string `json:"gambar"`
 	Date     int64 `json:"date"`
+}
+
+type UpdatePostingan struct {
+	Title  string `json:"title"`
+	Post     string `json:"post"`
+	Gambar     string `json:"gambar"`
 }
 
 type Comment struct {

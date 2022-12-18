@@ -47,7 +47,7 @@ const Profile = () => {
             <Image
               width={200}
               style={{borderRadius : '100px'}}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              src={Cookies.get('image')}
             />
             <div className="data-profile" style={{marginTop: 30}}>
                 <p className="profile-title">Name</p>

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Image, Button, Input, Space } from "antd";
 // import "./Postingan.css";
 import Sidebar from "../../Sidebar/Sidebar";
-import { Layout, Menu } from "antd";
+import { Layout, Modal } from "antd";
 import Cookies from "js-cookie";
 import {
   CommentOutlined,
@@ -16,10 +16,16 @@ import { DataCtx } from "../../Data/Data";
 import { useContext } from "react";
 import moment from "moment";
 import { useParams, Link } from "react-router-dom";
-import { renderCloseIcon } from "antd/es/modal/PurePanel";
+import { useNavigate } from "react-router-dom";
+
+
 
 const DetailExplore = () => {
   const { explore, userDataList, comment } = useContext(DataCtx);
+  const navigate = useNavigate();
+  const[open, setOpen] = useState(false)
+  const[commentOpen, setCommentOpen] = useState(false)
+  const [selectedToDelete, setSelectedToDelete] = useState(0)
   let { id } = useParams();
   const [filteredComment, setFilteredComment] = useState([]);
   useEffect(() => {
@@ -36,6 +42,34 @@ const DetailExplore = () => {
   );
   const newUserData = Object.assign({}, ...userData);
 
+  const deleteHandler = () => {
+    axios
+      .delete(`http://localhost:8081/deleteExplore/${id}`)
+      .then(() => {
+        message.success("Feeds has been deleted");
+        navigate("/explore");
+        window.location.reload();
+        
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        message.error(err.response.data);
+      })
+  }
+  const deleteCommentHandler = () => {
+    axios
+      .delete(`http://localhost:8081/deleteComment/${selectedToDelete}`)
+      .then(() => {
+        message.success("Your comment has been deleted");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        message.error(err.response.data);
+      })
+  }
+
+  
   const handleComment = () => {
     const data = {
       user_id: parseInt(Cookies.get("id")),
@@ -64,6 +98,22 @@ const DetailExplore = () => {
   // console.log(newDate)
   return (
     <div>
+        <Modal
+        title="Delete data"
+        open={open}
+        onOk={deleteHandler}
+        onCancel={() => {setOpen(false)}}
+      >
+        <p>Are you sure wanna delete the data  ? </p>
+      </Modal>
+        <Modal
+        title="Delete Comment"
+        open={commentOpen}
+        onOk={deleteCommentHandler}
+        onCancel={() => {setCommentOpen(false)}}
+      >
+        <p>Are you sure wanna delete the comment  ? </p>
+      </Modal>
       <Layout style={{ minHeight: "100vh" }}>
         <Sidebar style={{ minHeight: "100vh" }} />
         <Layout className="site-layout">
@@ -93,8 +143,10 @@ const DetailExplore = () => {
                 <div>
                   {newFilterData.user_id == Cookies.get("id") ? (
                     <>
-                      <EditOutlined className="icon-side" />
-                      <DeleteOutlined className="icon-side" />
+                      <EditOutlined className="icon-side" onClick={() => { 
+                        navigate(`/explore/edit/${id}`);
+                    }} />
+                      <DeleteOutlined className="icon-side" onClick={() => setOpen(true)} />
                     </>
                   ) : (
                     <div></div>
@@ -159,6 +211,10 @@ const DetailExplore = () => {
                         {x.user_id == Cookies.get("id") ? (
                           <DeleteOutlined
                             style={{ fontSize: 30, color: "red" }}
+                            onClick={() => {
+                                setSelectedToDelete(x.id)
+                                setCommentOpen(true);
+                            }}
                           />
                         ) : (
                           <></>

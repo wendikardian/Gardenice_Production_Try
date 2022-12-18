@@ -32,11 +32,13 @@ const LoginForm = () => {
         var email = res.data.email;
         var name = res.data.name;
         var id = res.data.id;
+        var image = res.data.image;
         // var token = res.data.token;
         // Cookies.set("user", user.name, { expires: 1 });
         Cookies.set("email", email, { expires: 1 });
         Cookies.set("name", name, { expires: 1 });
         Cookies.set("id", id, { expires: 1 });
+        Cookies.set("image", image, { expires: 1 });
         // Cookies.set("token", token, { expires: 1 });
         message.success(`welcome, ${name}`);
         setIsLogin(true);

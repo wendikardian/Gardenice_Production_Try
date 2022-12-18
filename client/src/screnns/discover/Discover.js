@@ -31,7 +31,7 @@ const Discover = () => {
     axios
       .delete(`http://localhost:8081/deleteExplore/${selectedToDelete}`)
       .then(() => {
-        message.success("Success adding new Explore");
+        message.success("Feeds has been deleted");
         navigate("/explore");
         window.location.reload();
         

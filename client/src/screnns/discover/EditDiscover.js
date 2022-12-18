@@ -35,18 +35,18 @@ const EditDiscover = () => {
       gambar: values.image,
     };
     console.log(data);
-    // axios
-    //   .post("http://localhost:8081/insertExplore", data)
-    //   .then(() => {
-    //     message.success("Success adding new Explore");
-    //     setExplore([...explore, data]);
-    //     navigate("/explore");
-    //     window.location.reload();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data);
-    //     message.error(err.response.data);
-    //   });
+    axios.put(`http://localhost:8081/updateExplore/${id}`, data).then(() => {
+        setTimeout(() => {
+            message.success("Success ! Edit the feeds");
+        }, 1000)
+        navigate("/explore");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        message.error(err.response.data);
+      });
+
   };
   return (
     <div>
