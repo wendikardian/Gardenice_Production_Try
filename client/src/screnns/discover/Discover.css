@@ -16,6 +16,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 30px;
+    width: 100%;
 }
 .user-discover img{
     width: 50px;
@@ -40,4 +41,38 @@
 .header-explore{
     display: flex;
     justify-content: space-around;
+    margin-top: 20px;
+}
+
+.icon-side{
+    font-size: 32px;
+    margin-right: 10px;
+
+}
+
+
+.comment-container{
+    display: flex;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+.comment-item{
+    width: 100%;
+    margin-top: 50px;
+}
+
+.full{
+    width: 900px;
+    
+}
+
+.comment-box{
+    background-color: rgb(188, 216, 188);
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 20px;
 }

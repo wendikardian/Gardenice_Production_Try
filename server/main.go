@@ -53,8 +53,12 @@ func Routers() {
 	router.POST("/register", Register)
 	router.POST("/login", Login)
 	router.GET("/getExplore", getExplore)
+	router.GET("/userList", getUserList)
 	router.GET("/getStore", getStore)
+	router.GET("/getComment", getComment)
 	router.POST("/insertExplore", insertExplore)
+	router.POST("/insertComment", insertComment)
+	router.DELETE("/deleteExplore/:id", deleteExplore)
 	
 	router.Run(":8081")
 	// router.HandleFunc("/users/{id}",
@@ -228,11 +232,8 @@ func getExplore(c *gin.Context) {
 
 func getExploreData(code string) []Postingan {
 
-	
-    
-	// defer db.Close()
 	var posts []Postingan
-	result, err := db.Query("SELECT * FROM posting")
+	result, err := db.Query("SELECT * FROM posting ORDER BY id DESC")
 
 	if err != nil {
 		fmt.Println("Err", err.Error())
@@ -252,6 +253,68 @@ func getExploreData(code string) []Postingan {
 	return posts
 }
 
+
+func deleteExplore(c *gin.Context) {
+	id := c.Param("id")
+	itemID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	err = deteteExploreDB(itemID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Item deleted successfully"})
+}
+
+func deteteExploreDB(id int) error {
+	
+	_, err = db.Exec("DELETE FROM posting WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+
+func getUserList(c *gin.Context) {
+	code := c.Param("code")
+
+	userListData := getUserListData(code)
+
+	if userListData == nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.IndentedJSON(http.StatusOK, userListData)
+	}
+}
+
+func getUserListData(code string) []UserData {
+
+	var users []UserData
+	result, err := db.Query("SELECT id, name, email, gender, roles, image FROM user ")
+
+	if err != nil {
+		fmt.Println("Err", err.Error())
+		return nil
+	}
+
+	for result.Next() {
+		var user UserData
+		err := result.Scan(&user.ID, &user.Name,
+			&user.Email, &user.Gender, &user.Roles, &user.Image)
+		if err != nil {
+			panic(err.Error())
+		}
+		users = append(users, user)
+	}
+
+	return users
+}
+
 func insertExplore(c *gin.Context) {
 	var post Postingan
 	
@@ -265,11 +328,6 @@ func insertExplore(c *gin.Context) {
 
 func addExplore(post Postingan) {
 
-
-	// defer the close till after this function has finished
-	// executing
-	// defer db.Close()
-
 	insert, err := db.Query(
 		"INSERT INTO posting (user_id, title, post, gambar, date) VALUES (?,?,?,?,?)",
 		post.User_id, post.Title, post.Post, post.Gambar, post.Date)
@@ -280,8 +338,33 @@ func addExplore(post Postingan) {
 	}
 
 	defer insert.Close()
-
 }
+
+func insertComment(c *gin.Context) {
+	var comment Comment
+	
+	if err := c.ShouldBindJSON(&comment); err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+	} else {
+		addComment(comment)
+		c.IndentedJSON(http.StatusCreated, comment)
+	}
+}
+
+func addComment(comment Comment) {
+
+	insert, err := db.Query(
+		"INSERT INTO comment (user_id, post_id, comment, date) VALUES (?,?,?,?)",
+		comment.User_id, comment.Post_id, comment.Comment, comment.Date)
+
+	// if there is an error inserting, handle it
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer insert.Close()
+}
+
 
 func getStore(c *gin.Context) {
 	code := c.Param("code")
@@ -296,10 +379,6 @@ func getStore(c *gin.Context) {
 }
 
 func getStoreData(code string) []Store {
-
-	
-    
-	// defer db.Close()
 	var stores []Store
 	result, err := db.Query("SELECT * FROM store")
 
@@ -318,6 +397,36 @@ func getStoreData(code string) []Store {
 	}
 
 	return stores
+}
+func getComment(c *gin.Context) {
+	code := c.Param("code")
+	comment := getCommentData(code)
+	if comment == nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.IndentedJSON(http.StatusOK, comment)
+	}
+}
+
+func getCommentData(code string) []Comment {
+	var comments []Comment
+	result, err := db.Query("SELECT * FROM comment ORDER BY id DESC")
+
+	if err != nil {
+		fmt.Println("Err", err.Error())
+		return nil
+	}
+
+	for result.Next() {
+		var comment Comment
+		err := result.Scan(&comment.ID, &comment.User_id, &comment.Post_id, &comment.Comment, &comment.Date)
+		if err != nil {
+			panic(err.Error())
+		}
+		comments = append(comments, comment)
+	}
+
+	return comments
 }
 
 
@@ -459,6 +568,14 @@ type Postingan struct {
 	Date     int64 `json:"date"`
 }
 
+type Comment struct {
+	ID        int64 `json:"id"`
+	User_id int64 `json:"user_id"`
+	Post_id  int64 `json:"post_id"`
+	Comment     string `json:"comment"`
+	Date     int64 `json:"date"`
+}
+
 type Store struct{
 	ID int `json:"id"`
 	Title string `json:"title"`
@@ -477,7 +594,15 @@ type User struct {
 	Gender string `json:"gender"`
 	Roles     int `json:"roles"`
 	Image string `json:"image"`
+}
 
+type UserData struct {
+	ID        int64 `json:"id"`
+	Name string `json:"name"`
+	Email  string `json:"email"`
+	Gender string `json:"gender"`
+	Roles     int `json:"roles"`
+	Image string `json:"image"`
 }
 
 //Db configuration

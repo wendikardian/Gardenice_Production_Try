@@ -14,6 +14,8 @@ import EditProfile from "./screnns/editprofile/EditProfile";
 import Shopping from "./screnns/shopping/Shopping";
 import Discover from "./screnns/discover/Discover";
 import AddDiscover from "./screnns/discover/AddDiscover";
+import DetailExplore from "./screnns/discover/DetailExplore";
+import EditDiscover from "./screnns/discover/EditDiscover";
 
 function App() {
   // const { isLogin, setIsLogin } = useContext(DataCtx);
@@ -51,6 +53,18 @@ function App() {
             <>
             <Navbar/>
             <Discover />
+            </>
+          } />
+          <Route path="/explore/detail/:id" exact element={
+            <>
+            <Navbar/>
+            <DetailExplore />
+            </>
+          } />
+          <Route path="/explore/edit/:id" exact element={
+            <>
+            <Navbar/>
+            <EditDiscover />
             </>
           } />
           <Route path="/createfeeds" exact element={

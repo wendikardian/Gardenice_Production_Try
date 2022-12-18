@@ -19,7 +19,7 @@ const RegisterForm = () => {
         password : values.password,
         gender: "",
         roles: 1,
-        image : ""
+        image : "https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png"
   }
       console.log(data);
     //   JSON.stringify(data)
