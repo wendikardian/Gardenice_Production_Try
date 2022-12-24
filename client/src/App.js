@@ -16,6 +16,11 @@ import Discover from "./screnns/discover/Discover";
 import AddDiscover from "./screnns/discover/AddDiscover";
 import DetailExplore from "./screnns/discover/DetailExplore";
 import EditDiscover from "./screnns/discover/EditDiscover";
+import AddShopping from "./screnns/shopping/AddShopping";
+import MyOrder from "./screnns/shopping/MyOrder";
+import SeeOrder from "./screnns/shopping/SeeOrder";
+import EditStore from "./screnns/shopping/editStore";
+import ShoppingSearch from "./screnns/shopping/ShoppingSearch";
 
 function App() {
   // const { isLogin, setIsLogin } = useContext(DataCtx);
@@ -55,16 +60,47 @@ function App() {
             <Discover />
             </>
           } />
+          <Route path="/order" exact element={
+            <>
+            <Navbar/>
+            <MyOrder />
+            </>
+          } />
+          <Route path="/seeorder" exact element={
+            <>
+            <Navbar/>
+            <SeeOrder />
+            </>
+          } />
+          <Route path="/addshopping" exact element={
+            <>
+            <Navbar/>
+            <AddShopping />
+            </>
+          } />
+          
           <Route path="/explore/detail/:id" exact element={
             <>
             <Navbar/>
             <DetailExplore />
             </>
           } />
+          <Route path="/shopping/search/:id" exact element={
+            <>
+            <Navbar/>
+            <ShoppingSearch />
+            </>
+          } />
           <Route path="/explore/edit/:id" exact element={
             <>
             <Navbar/>
             <EditDiscover />
+            </>
+          } />
+          <Route path="/store/edit/:id" exact element={
+            <>
+            <Navbar/>
+            <EditStore />
             </>
           } />
           <Route path="/createfeeds" exact element={

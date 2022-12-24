@@ -39,6 +39,7 @@ const LoginForm = () => {
         Cookies.set("name", name, { expires: 1 });
         Cookies.set("id", id, { expires: 1 });
         Cookies.set("image", image, { expires: 1 });
+        Cookies.set("roles", res.data.roles, { expires: 1 });
         // Cookies.set("token", token, { expires: 1 });
         message.success(`welcome, ${name}`);
         setIsLogin(true);

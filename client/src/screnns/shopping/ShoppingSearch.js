@@ -15,15 +15,18 @@ import {
   EditOutlined,
   DeleteOutlined 
 } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Avatar, Card } from "antd";
 const { Meta } = Card;
 
-const Shopping = () => {
+const ShoppingSearch = () => {
   const navigate = useNavigate()
+  let { id } = useParams("id");
   // const [store, setStore] = useState([]);
   const { store } = useContext(DataCtx);
+  const filter = store.filter(x => x['title'].toUpperCase().includes(id.toUpperCase()));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
   const [selectedIdToDelete, setSelectedIdToDelete] = useState(0);
@@ -126,11 +129,12 @@ const Shopping = () => {
             <ShoppingCartOutlined />
           </div>
           <div className="card-container">
-            <h1>Shopping</h1>
+            <h1>Search Item</h1>
           </div>
             <Search placeholder="input search text"  onSearch={searchHandle} style={{ width: 600 , marginTop : 50}} />
+            <p style={{marginTop: 20, fontWeight: "bold"}}>Keyword :  {id}</p>
           <div className="shopping-cons">
-            {store.map((x) => {
+            {filter.map((x) => {
               return (
                 <Card
                   style={{
@@ -175,4 +179,4 @@ const Shopping = () => {
   );
 };
 
-export default Shopping;
+export default ShoppingSearch;

@@ -9,6 +9,7 @@ const DataApp = (props) => {
     const [userDataList, setUserDataList] = useState([])
     const [comment, setComment] = useState([])
     const [explore, setExplore] = useState([])
+    const [transaksi, setTransaksi] = useState([])
 
     useEffect(() => {
         const fetchStore = async () => {
@@ -28,14 +29,20 @@ const DataApp = (props) => {
             setComment(commentData.data.map(x => { return {id: x.id, user_id : x.user_id, post_id : x.post_id, comment : x.comment, date : x.date}} ))
             }
         
+        const fetchTransaksi = async () => {
+            const transaksiData = await axios.get(`http://localhost:8081/getTransaksi`);
+            setTransaksi(transaksiData.data.map(x => { return {id: x.id, user_id : x.user_id, item_id : x.item_id, quantity : x.quantity, process : x.process, date : x.date}} ))
+            }
+        
         fetchStore()
         fetchExplore()
         userDataList()
         fetchComment()
+        fetchTransaksi()
 
     }, [])
 
-    const context = {isLogin, setIsLogin, store, setStore, explore, setExplore, userDataList, setUserDataList, comment, setComment}
+    const context = {isLogin, setIsLogin, store, setStore, explore, setExplore, userDataList, setUserDataList, comment, setComment, transaksi, setTransaksi}
 
     return( 
         <DataCtx.Provider value={context}> 

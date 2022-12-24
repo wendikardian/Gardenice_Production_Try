@@ -6,3 +6,59 @@
     flex-wrap: wrap;
     margin-top: 50px;;
 }
+
+.shopping-cart{
+    background-color: rgb(133, 233, 133);
+    padding: 20px;
+    border-radius: 50px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 20;
+}
+
+.form-shop{
+    width: 300px;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+
+.heading-table th{
+    min-width: 100px;
+    max-width: 400px;
+    border: 2px black solid;
+    padding: 10px;
+    background-color: #B6E388;
+}
+
+
+.body-table td{
+    padding: 10px;
+    min-width: 100px;
+    max-width: 400px;
+    border: 2px black solid;
+}
+
+.table-container{
+    margin-top: 60px;
+}
+
+.order-image{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+
+.btn-green{
+    background-color: #B6E388 !important;
+}
+
+.btn-yellow{
+    background-color: yellow !important;
+}
+
+.btn-blue{
+    background-color: rgb(162, 162, 241) !important;
+}
