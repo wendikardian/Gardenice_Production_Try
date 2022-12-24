@@ -35,7 +35,7 @@ const sendPackage = (id) => {
       };
       console.log(data);
       axios
-        .put(`http://localhost:8081/updateTransaksi/${id}`, data)
+        .put(`https://serverpromnet-production.up.railway.app/updateTransaksi/${id}`, data)
         .then(() => {
             message.success("Success ! Send Package");
           setTimeout(() => {

@@ -28,7 +28,7 @@ const EditProfile = () => {
     };
     console.log(data);
     axios
-      .put(`http://localhost:8081/updateUser/${id}`, data)
+      .put(`https://serverpromnet-production.up.railway.app/updateUser/${id}`, data)
       .then(() => {
         Cookies.set("email", data.email, { expires: 1 });
         Cookies.set("name", data.name, { expires: 1 });;

@@ -35,7 +35,7 @@ const EditDiscover = () => {
       gambar: values.image,
     };
     console.log(data);
-    axios.put(`http://localhost:8081/updateExplore/${id}`, data).then(() => {
+    axios.put(`https://serverpromnet-production.up.railway.app/updateExplore/${id}`, data).then(() => {
         setTimeout(() => {
             message.success("Success ! Edit the feeds");
         }, 1000)

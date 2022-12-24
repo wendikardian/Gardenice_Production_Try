@@ -34,7 +34,7 @@ const AddDiscover = () => {
     };
     console.log(data);
     axios
-      .post("http://localhost:8081/insertExplore", data)
+      .post("https://serverpromnet-production.up.railway.app/insertExplore", data)
       .then(() => {
         message.success("Success adding new Explore");
         setExplore([...explore, data]);

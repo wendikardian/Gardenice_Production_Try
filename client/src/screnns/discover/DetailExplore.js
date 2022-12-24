@@ -44,7 +44,7 @@ const DetailExplore = () => {
 
   const deleteHandler = () => {
     axios
-      .delete(`http://localhost:8081/deleteExplore/${id}`)
+      .delete(`https://serverpromnet-production.up.railway.app/deleteExplore/${id}`)
       .then(() => {
         message.success("Feeds has been deleted");
         navigate("/explore");
@@ -58,7 +58,7 @@ const DetailExplore = () => {
   }
   const deleteCommentHandler = () => {
     axios
-      .delete(`http://localhost:8081/deleteComment/${selectedToDelete}`)
+      .delete(`https://serverpromnet-production.up.railway.app/deleteComment/${selectedToDelete}`)
       .then(() => {
         message.success("Your comment has been deleted");
         window.location.reload();
@@ -81,7 +81,7 @@ const DetailExplore = () => {
     console.log(data);
 
     axios
-      .post("http://localhost:8081/insertComment", data)
+      .post("https://serverpromnet-production.up.railway.app/insertComment", data)
       .then(() => {
         message.success("Comment already been published");
         window.location.reload();

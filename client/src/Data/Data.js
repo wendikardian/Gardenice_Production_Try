@@ -13,24 +13,24 @@ const DataApp = (props) => {
 
     useEffect(() => {
         const fetchStore = async () => {
-            const storeResult = await axios.get(`http://localhost:8081/getStore`);
+            const storeResult = await axios.get(`https://serverpromnet-production.up.railway.app/getStore`);
             setStore(storeResult.data.map(x => { return {id: x.id, title: x.title, desc: x.desc, user_id : x.user_id, image : x.image, date : x.date, price : x.price}} ))
             }
         const fetchExplore = async () => {
-            const exploreResult = await axios.get(`http://localhost:8081/getExplore`);
+            const exploreResult = await axios.get(`https://serverpromnet-production.up.railway.app/getExplore`);
             setExplore(exploreResult.data.map(x => { return {id: x.id, user_id : x.user_id, title : x.title, post: x.post, gambar : x.gambar, date  : x.date}} ))
             }
         const userDataList = async () => {
-            const userListResult = await axios.get(`http://localhost:8081/userList`);
+            const userListResult = await axios.get(`https://serverpromnet-production.up.railway.app/userList`);
             setUserDataList(userListResult.data.map(x => { return {id: x.id, name : x.name, email : x.email, gender : x.gender, roles : x.roles, image: x.image}} ))
             }
         const fetchComment = async () => {
-            const commentData = await axios.get(`http://localhost:8081/getComment`);
+            const commentData = await axios.get(`https://serverpromnet-production.up.railway.app/getComment`);
             setComment(commentData.data.map(x => { return {id: x.id, user_id : x.user_id, post_id : x.post_id, comment : x.comment, date : x.date}} ))
             }
         
         const fetchTransaksi = async () => {
-            const transaksiData = await axios.get(`http://localhost:8081/getTransaksi`);
+            const transaksiData = await axios.get(`https://serverpromnet-production.up.railway.app/getTransaksi`);
             setTransaksi(transaksiData.data.map(x => { return {id: x.id, user_id : x.user_id, item_id : x.item_id, quantity : x.quantity, process : x.process, date : x.date}} ))
             }
         

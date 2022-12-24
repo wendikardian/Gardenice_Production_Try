@@ -35,7 +35,7 @@ const MyOrder = () => {
       };
       console.log(data);
       axios
-        .put(`http://localhost:8081/updateTransaksi/${id}`, data)
+        .put(`https://serverpromnet-production.up.railway.app/updateTransaksi/${id}`, data)
         .then(() => {
           message.success("Thanks for updating");
           setTimeout(() => {

@@ -36,7 +36,7 @@ const AddShopping = () => {
     };
     console.log(data);
     axios
-      .post("http://localhost:8081/insertItem", data)
+      .post("https://serverpromnet-production.up.railway.app/insertItem", data)
       .then(() => {
         message.success("Success adding new Item");
         setTimeout(() => {

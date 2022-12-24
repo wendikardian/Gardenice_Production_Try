@@ -23,7 +23,7 @@ const RegisterForm = () => {
   }
       console.log(data);
     //   JSON.stringify(data)
-      axios.post("http://localhost:8081/register", data).then(
+      axios.post("https://serverpromnet-production.up.railway.app/register", data).then(
           () => {
               message.success("Success, please login")
               navigate('/login');

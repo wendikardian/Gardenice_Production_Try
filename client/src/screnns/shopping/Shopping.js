@@ -60,7 +60,7 @@ const Shopping = () => {
     console.log(data);
 
     axios
-      .post("http://localhost:8081/insertTransaksi", data)
+      .post("https://serverpromnet-production.up.railway.app/insertTransaksi", data)
       .then(() => {
         message.success("Comment already been published");
         navigate("/order");
@@ -74,7 +74,7 @@ const Shopping = () => {
 
   const handleDeleteItem = () => {
     axios
-      .delete(`http://localhost:8081/deleteStore/${selectedIdToDelete}`)
+      .delete(`https://serverpromnet-production.up.railway.app/deleteStore/${selectedIdToDelete}`)
       .then(() => {
         message.success("Item has been deleted");
         navigate("/shopping");

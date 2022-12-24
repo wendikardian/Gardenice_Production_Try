@@ -93,7 +93,9 @@ const Home = () => {
                             <div className="row justify-content-center">
                                 <div className="col-lg-8">
                                     <h1 className="display-1 text-white mb-5 animated slideInDown">Welcome To Gardenice</h1>
-                                    <a href="" className="btn btn-primary py-sm-3 px-sm-4">Explore More</a>
+                                    <Link to="/login" >
+                                    <a href="" className="btn btn-primary py-sm-3 px-sm-4">Login</a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

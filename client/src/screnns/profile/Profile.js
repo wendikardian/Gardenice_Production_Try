@@ -17,7 +17,7 @@ const Profile = () => {
   const [post, setPost] = useState([]);
   useEffect(() => {
     const fetchPosting = async () => {
-      const dataPosting = await axios.get(`http://localhost:9080/post`);
+      const dataPosting = await axios.get(`https://serverpromnet-production.up.railway.app/post`);
       setPost(
         dataPosting.data.map((x) => {
           return {

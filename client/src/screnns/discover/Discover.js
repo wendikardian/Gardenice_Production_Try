@@ -29,7 +29,7 @@ const Discover = () => {
   const deleteHandler = () => {
     
     axios
-      .delete(`http://localhost:8081/deleteExplore/${selectedToDelete}`)
+      .delete(`https://serverpromnet-production.up.railway.app/deleteExplore/${selectedToDelete}`)
       .then(() => {
         message.success("Feeds has been deleted");
         navigate("/explore");

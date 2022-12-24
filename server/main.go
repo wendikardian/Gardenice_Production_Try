@@ -40,13 +40,13 @@ func Routers() {
 	// router.HandleFunc("/users",
 	// 	getUser).Methods("GET")
 	router.Use(cors.New(cors.Config{
-			AllowOrigins:     []string{"http://localhost:3000"},
+			AllowOrigins:     []string{"https://gardenice.netlify.app/"},
 			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 			AllowHeaders:     []string{"Content-Type"},
 			ExposeHeaders:    []string{"Content-Length"},
 			AllowCredentials: true,
 			AllowOriginFunc: func(origin string) bool {
-				return origin == "http://localhost:3000"
+				return origin == "https://gardenice.netlify.app/"
 			},
 			MaxAge: 12 * time.Hour,
 		}))
@@ -895,7 +895,7 @@ var err error
 
 func InitDB() {
 	db, err = sql.Open("mysql",
-		"root:@tcp(127.0.0.1:3306)/gardendb")
+		"gardenice123@gardenice:Wendi123*@tcp(gardenice.mysql.database.azure.com)/gardendb")
 	if err != nil {
 		panic(err.Error())
 	}

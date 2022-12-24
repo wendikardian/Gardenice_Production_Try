@@ -23,7 +23,7 @@ const LoginForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
     axios
-      .post("http://localhost:8081/login", {
+      .post("https://serverpromnet-production.up.railway.app/login", {
         email: values.email,
         password: values.password,
       })

@@ -37,7 +37,7 @@ const EditStore = () => {
       price: values.price,
     };
     console.log(data);
-    axios.put(`http://localhost:8081/updateStore/${id}`, data).then(() => {
+    axios.put(`https://serverpromnet-production.up.railway.app/updateStore/${id}`, data).then(() => {
         message.success("Success ! Edit the feeds");
         setTimeout(() => {
             navigate("/shopping");
